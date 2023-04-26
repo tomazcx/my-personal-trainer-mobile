@@ -23,10 +23,9 @@ export const ProviderItem: React.FC<ProviderProps> = ({name, id, avatar}) => {
 
 	const avatarImage = avatar !== null ? `https://my-personal-trainer-api.up.railway.app/files/${avatar}` : 'https://museulinguaportuguesa.org.br/wp-content/uploads/2018/02/Personal-Trainer.jpg'
 
-
 	return (
 		<ProviderContainer
-			onPress={() => console.log('adas')}
+			onPress={() => navigateToCreateAppointment(id)}
 		>
 			<ProviderAvatar source={{uri: avatarImage}} />
 

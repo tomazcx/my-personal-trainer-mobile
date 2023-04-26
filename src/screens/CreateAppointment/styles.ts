@@ -56,12 +56,32 @@ export const ProvidersListContainer = styled.View`
   height: 112px;
 `;
 
-export const ProvidersList = styled(FlatList as new () => FlatList<Provider>)`
-  padding: 32px 24px;
+export const ProviderInfoContainer = styled.View`
+	flex-direction:row;
+	justify-content: space-between;
+	margin: 24px 24px 24px;
+	align-items:center;
 `;
 
+export const ProviderAvatar = styled.Image`
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+`
+
+export const ProviderInfo = styled.View`
+	flex-direction:column;
+	gap:12px;
+`
+
+export const ProviderText = styled.Text`
+	  color: #f4ede8;
+	font-weight: semibold;
+	font-size: 16px;
+`
+
 export const ProviderContainer = styled(RectButton) <ProviderContainerProps>`
-  background: ${(props) => (props.selected ? "#ff9000" : "#3e3b47")};
+  background: ${(props) => (props.selected ? "#890000" : "#3e3b47")};
   padding: 8px 12px;
   margin-right: 16px;
   border-radius: 10px;
@@ -69,29 +89,19 @@ export const ProviderContainer = styled(RectButton) <ProviderContainerProps>`
   align-items: center;
 `;
 
-export const ProviderAvatar = styled.Image`
-  height: 32px;
-  width: 32px;
-  border-radius: 16px;
-`;
 
-export const ProviderName = styled.Text<ProviderNameProps>`
-  margin-left: 8px;
-  font-size: 16px;
-  color: ${(props) => (props.selected ? "#232129" : "#f4ede8")};
-`;
 
-export const Calender = styled.View``;
+export const CalenderContainer = styled.View``;
 
 export const Title = styled.Text`
   color: #f4ede8;
   font-size: 24px;
-  margin: 0 24px 24px;
+  margin: 12px 24px 24px;
 `;
 
 export const OpenDatePickerButton = styled(RectButton)`
   height: 46px;
-  background: #ff9000;
+  background: #890000;
   border-radius: 10px;
   margin: 0 24px;
   align-items: center;
@@ -99,7 +109,7 @@ export const OpenDatePickerButton = styled(RectButton)`
 `;
 
 export const OpenDatePickerButtonText = styled.Text`
-  color: #232129;
+  color: #FFF;
   font-size: 16px;
 `;
 
@@ -125,20 +135,20 @@ export const SectionContent = styled.ScrollView.attrs({
 
 export const Hour = styled(RectButton) <HourProps>`
   padding: 12px;
-  background: ${(props) => (props.selected ? "#ff9000" : "#3e3b47")};
+  background: ${(props) => (props.selected ? "#890000" : "#3e3b47")};
   border-radius: 10px;
   margin-right: 8px;
   opacity: ${(props) => (props.available ? 1 : 0.3)};
 `;
 
 export const HourText = styled.Text<HourTextProps>`
-  color: ${(props) => (props.selected ? "#232129" : "#f4ede8")};
+  color: ${(props) => (props.selected ? "#FFF" : "#f4ede8")};
   font-size: 16px;
 `;
 
 export const CreateAppointmentButton = styled(RectButton)`
   height: 50px;
-  background: #ff9000;
+  background: #890000;
   border-radius: 10px;
   margin: 0 24px 24px;
   align-items: center;
@@ -146,6 +156,6 @@ export const CreateAppointmentButton = styled(RectButton)`
 `;
 
 export const CreateAppointmentButtonText = styled.Text`
-  color: #232129;
+  color: #FFF;
   font-size: 18px;
 `;

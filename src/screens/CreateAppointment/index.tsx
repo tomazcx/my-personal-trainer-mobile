@@ -1,14 +1,12 @@
 import React, {useCallback, useEffect, useState, useMemo} from "react";
-import {Platform, Alert} from "react-native";
+import {Platform, Text, Alert, View} from "react-native";
 import {useRoute, useNavigation} from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import {format} from "date-fns";
-
+import {addDays, format, subDays} from "date-fns";
 import {api} from "../../services/api";
-
 import {useAuth} from "../../hooks/auth";
-
+import {Calendar, LocaleConfig} from 'react-native-calendars';
 import {
 	Container,
 	Header,
@@ -16,15 +14,8 @@ import {
 	HeaderTitle,
 	UserAvatar,
 	Content,
-	ProvidersListContainer,
-	ProvidersList,
-	ProviderContainer,
 	ProviderAvatar,
-	ProviderName,
-	Calender,
 	Title,
-	OpenDatePickerButton,
-	OpenDatePickerButtonText,
 	Schedule,
 	Section,
 	SectionTitle,
@@ -33,6 +24,10 @@ import {
 	HourText,
 	CreateAppointmentButton,
 	CreateAppointmentButtonText,
+	CalenderContainer,
+	ProviderInfoContainer,
+	ProviderInfo,
+	ProviderText,
 } from "./styles";
 
 interface RouteParams {
@@ -42,13 +37,37 @@ interface RouteParams {
 export interface Provider {
 	id: string;
 	name: string;
-	avatar_url: string;
+	avatar: string;
+	email: string
 }
 
 interface AvailabilityItem {
 	hour: number;
 	available: boolean;
 }
+
+
+LocaleConfig.locales['br'] = {
+	monthNames: [
+		'Janeiro',
+		'Fevereiro',
+		'Março',
+		'Abril',
+		'Maio',
+		'Junho',
+		'Julho',
+		'Agosto',
+		'Setembro',
+		'Outubro',
+		'Novembro',
+		'Dezembro'
+	],
+	monthNamesShort: ["jan.", "fev.", "mar.", "abr.", "maio", "jun.", "jul.", "ago.", "set.", "out.", "nov.", "dez."],
+	dayNames: ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'],
+	dayNamesShort: ['Seg.', 'Ter.', 'Quar.', 'Qui.', 'Sex.', 'Sáb.', 'Dom.'],
+	today: "Hoje"
+};
+LocaleConfig.defaultLocale = 'br'
 
 const CreateAppointment: React.FC = () => {
 	const {user} = useAuth();
@@ -58,6 +77,7 @@ const CreateAppointment: React.FC = () => {
 	const routeParams = route.params as RouteParams;
 
 	const [providers, setProviders] = useState<Provider[]>([]);
+	const [providerData, setProviderData] = useState<Provider | undefined>(undefined)
 	const [selectedProvider, setSelectedProvider] = useState(
 		routeParams.providerId,
 	);
@@ -66,9 +86,13 @@ const CreateAppointment: React.FC = () => {
 	const [availability, setAvailability] = useState<AvailabilityItem[]>([]);
 	const [selectedHour, setSelectedHour] = useState(0);
 
+	const providerAvatar = providerData?.avatar ? `https://my-personal-trainer-api.up.railway.app/files/${providerData?.avatar}` : 'https://museulinguaportuguesa.org.br/wp-content/uploads/2018/02/Personal-Trainer.jpg'
+
 	useEffect(() => {
 		api.get("/providers").then((response) => {
 			setProviders(response.data);
+			const selectedProviderData = response.data.find((provider: Provider) => provider.id === selectedProvider)
+			setProviderData(selectedProviderData)
 		});
 	}, []);
 
@@ -164,51 +188,49 @@ const CreateAppointment: React.FC = () => {
 					<Icon name="chevron-left" size={24} color="#999591" />
 				</BackButton>
 
-				<HeaderTitle>Cabeleireiros</HeaderTitle>
+				<HeaderTitle>Selecionar outro</HeaderTitle>
 
-				<UserAvatar source={{uri: user.avatar_url}} />
+				<UserAvatar source={{uri: `https://my-personal-trainer-api.up.railway.app/files/${user.avatar}`}} />
 			</Header>
 
 			<Content>
-				<ProvidersListContainer>
-					<ProvidersList
-						horizontal
-						showsHorizontalScrollIndicator={false}
-						data={providers}
-						keyExtractor={(provider) => provider.id}
-						renderItem={({item: provider}) => (
-							<ProviderContainer
-								onPress={() => handleSelectProvider(provider.id)}
-								selected={provider.id === selectedProvider}
-							>
-								<ProviderAvatar source={{uri: provider.avatar_url}} />
-								<ProviderName selected={provider.id === selectedProvider}>
-									{provider.name}
-								</ProviderName>
-							</ProviderContainer>
-						)}
-					/>
-				</ProvidersListContainer>
+				<Title>Treinador selecionado: </Title>
+				<ProviderInfoContainer>
+					<ProviderAvatar source={{uri: providerAvatar}} />
+					<ProviderInfo>
+						<ProviderText>Nome: {providerData?.name || 'Carregando...'}</ProviderText>
+						<ProviderText>Email: {providerData?.email || 'Carregando...'}</ProviderText>
+					</ProviderInfo>
+				</ProviderInfoContainer>
 
-				<Calender>
+				<CalenderContainer>
 					<Title>Escolha a data</Title>
 
-					<OpenDatePickerButton onPress={handleToggleDatePicker}>
-						<OpenDatePickerButtonText>
-							Selecionar outra data
-						</OpenDatePickerButtonText>
-					</OpenDatePickerButton>
+					<Calendar
+						theme={{
+							backgroundColor: "#3e3b47",
+							textSectionTitleColor: "#FFFFFF",
+							calendarBackground: '#3e3b47',
+							dayTextColor: "#FFFFFF",
+							todayTextColor: '#890000',
+							monthTextColor: '#FFFFFF',
+							arrowColor: '#FFFFFF'
+						}}
+						onDayPress={day => setSelectedDate(addDays(new Date(day.dateString), 1))}
+						markedDates={{
+							[format(selectedDate, 'yyyy-MM-dd')]: {selected: true, disableTouchEvent: true, selectedColor: '#890000'}
+						}} />
+
 
 					{showDatePicker && (
 						<DateTimePicker
 							mode="date"
 							display="calendar"
-							textColor="#f4ede8"
 							onChange={handleDateChange}
 							value={selectedDate}
 						/>
 					)}
-				</Calender>
+				</CalenderContainer>
 
 				<Schedule>
 					<Title>Escolha horário</Title>
@@ -256,7 +278,7 @@ const CreateAppointment: React.FC = () => {
 					</Section>
 				</Schedule>
 
-				<CreateAppointmentButton onPress={handleCreateAppointment}>
+				<CreateAppointmentButton>
 					<CreateAppointmentButtonText>Agendar</CreateAppointmentButtonText>
 				</CreateAppointmentButton>
 			</Content>

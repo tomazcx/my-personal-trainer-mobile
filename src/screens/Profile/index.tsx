@@ -175,7 +175,7 @@ const Profile: React.FC = () => {
 						</BackButton>
 
 						<UserAvatarButton onPress={handleUpdateAvatar}>
-							<UserAvatar source={{uri: `https://my-personal-trainer-api.up.railway.app/files/${user.avatar}`}} />
+							<UserAvatar source={{uri: user.avatar ? `https://my-personal-trainer-api.up.railway.app/files/${user.avatar}` : 'https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg'}} />
 						</UserAvatarButton>
 
 						<View>

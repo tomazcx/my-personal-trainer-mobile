@@ -14,8 +14,8 @@ import {FormHandles} from '@unform/core';
 import * as Yup from 'yup';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import {Container, Title, BackToSignIn, BackToSignInText} from './styles';
-import logo from '../../assets/logo.svg'
+import {Container, Title, BackToSignIn, BackToSignInText, Logo} from './styles';
+import logo from '../../assets/logo.png'
 import Icon from 'react-native-vector-icons/Feather';
 import {getValidationErrors} from '../../utils/getValidationErrors';
 import {api} from '../../services/api';
@@ -89,7 +89,7 @@ const SignUp: React.FC = () => {
 					contentContainerStyle={{flex: 1}}
 				>
 					<Container>
-						<Image source={logo} />
+						<Logo source={logo} />
 						<View>
 							<Title>Crie sua conta</Title>
 						</View>

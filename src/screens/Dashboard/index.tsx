@@ -1,6 +1,5 @@
 import React, {Provider, useCallback, useEffect, useState} from "react";
 import {ParamListBase, useNavigation} from "@react-navigation/native";
-import Icon from "react-native-vector-icons/Feather";
 import {api} from "../../services/api";
 import {useAuth} from "../../hooks/auth";
 
@@ -14,18 +13,21 @@ import {
 	ProvidersListTitle,
 	HeaderUserInfo,
 	LogOutButton,
-	LogOutButtonText
+	LogOutButtonText,
+	SearchProviders,
+	NotFoundText
 } from "./styles";
 import {AxiosResponse} from "axios";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
 import {ProviderItem} from "../../components/ProviderItem";
 import {ProviderProps} from "../../components/ProviderItem";
-import {Text} from "react-native";
+import {SearchInput} from "../../components/SearchInput";
 
 export const Dashboard: React.FC = () => {
 	const [providers, setProviders] = useState<ProviderProps[]>([]);
 
 	const {user, signOut} = useAuth();
+	const [searchText, setSearchText] = useState('')
 	const {navigate} = useNavigation<NativeStackNavigationProp<ParamListBase>>()
 
 	useEffect(() => {
@@ -38,13 +40,14 @@ export const Dashboard: React.FC = () => {
 		navigate("Profile");
 	}, [navigate]);
 
+	const providerList = searchText ? providers?.filter(provider => provider.name.toLowerCase().includes(searchText.toLowerCase())) : []
 
 
 	return (
 		<Container>
 			<Header>
 				<HeaderUserInfo onPress={navigateToProfile}>
-					<UserAvatar source={{uri: `https://my-personal-trainer-api.up.railway.app/files/${user.avatar}`}} />
+					<UserAvatar source={{uri: user.avatar ? `https://my-personal-trainer-api.up.railway.app/files/${user.avatar}` : 'https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg'}} />
 
 					<HeaderTitle>
 						Bem vindo, {"\n"}
@@ -54,12 +57,13 @@ export const Dashboard: React.FC = () => {
 				<LogOutButton onPress={signOut} ><LogOutButtonText>Sair</LogOutButtonText></LogOutButton>
 
 			</Header>
+			<ProvidersListTitle>Treinadores disponívies</ProvidersListTitle>
 
+			<SearchInput onChangeText={(text: string) => setSearchText(text)} />
+
+			{searchText && providerList.length === 0 ? <NotFoundText>Nenhum treinador encontrado!</NotFoundText> : null}
 			<ProvidersList
-				data={providers}
-				ListHeaderComponent={
-					<ProvidersListTitle>Treinadores disponívies</ProvidersListTitle>
-				}
+				data={searchText ? providerList : providers}
 				renderItem={({item: provider}: {item: ProviderProps}) => <ProviderItem name={provider.name} avatar={provider.avatar} id={provider.id} key={provider.id} />}
 			/>
 		</Container>

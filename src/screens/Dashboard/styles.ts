@@ -17,6 +17,12 @@ export const Header = styled.View`
   align-items: center;
 `;
 
+export const NotFoundText = styled.Text`
+	color: #FFF;
+	text-align:center;
+	font-size: 18px;
+`
+
 export const HeaderTitle = styled.Text`
 	color: #f4ede8;
   font-size: 20px;
@@ -25,7 +31,7 @@ export const HeaderTitle = styled.Text`
 
 export const HeaderUserInfo = styled(RectButton)`
 	flex-direction:row;
-	gap:16;
+	gap:16px;
 `
 
 export const UserName = styled.Text`
@@ -41,12 +47,13 @@ export const UserAvatar = styled.Image`
 
 export const ProvidersListTitle = styled.Text`
   font-size: 24px;
-  margin-bottom: 24px;
+  margin: 36px 24px 16px;
   color: #f4ede8;
 `;
 
 export const ProvidersList = styled(FlatList as new () => FlatList<ProviderProps>)`
-  padding: 32px 24px 16px;
+	padding: 16px 24px 16px 16px;
+	margin-bottom: 24px;
 `;
 
 export const LogOutButton = styled.TouchableOpacity`
@@ -59,6 +66,18 @@ export const LogOutButton = styled.TouchableOpacity`
 `
 export const LogOutButtonText = styled.Text`
 	color: #FFF;
+`
+
+export const SearchProviders = styled.TextInput`
+	background-color: #3e3b47;
+	border-radius:8px;
+	color: #FFF;
+	margin: 0px 24px 16px;
+	padding: 5px 10px;
+
+	::placeholder{
+		color: #FFF;
+	}
 `
 
 

@@ -1,5 +1,5 @@
 import React, {useCallback, useRef} from "react"
-import {Container, Title, ForgotPassword, ForgotPasswordText, CreateAccountButton, CreateAccountButtonText} from './styles';
+import {Container, Title, ForgotPassword, ForgotPasswordText, CreateAccountButton, CreateAccountButtonText, Logo} from './styles';
 import {
 	View,
 	Image,
@@ -17,7 +17,7 @@ import * as Yup from 'yup';
 import Input from "../../components/Input";
 import {Button} from "../../components/Button";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
-import logo from '../../assets/logo.svg'
+import logo from '../../assets/logo.png'
 import {useAuth} from "../../hooks/auth";
 import {getValidationErrors} from '../../utils/getValidationErrors'
 
@@ -81,7 +81,7 @@ export const SignIn = () => {
 					contentContainerStyle={{flex: 1}}
 				>
 					<Container>
-
+						<Logo source={logo} />
 						<View>
 							<Title>Faça seu login</Title>
 						</View>
