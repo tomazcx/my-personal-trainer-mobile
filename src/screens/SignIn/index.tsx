@@ -51,7 +51,7 @@ export const SignIn = () => {
 
 				await signIn({...data});
 
-				//navigation.navigate('Dashboard');
+				navigation.navigate('Dashboard');
 			} catch (err) {
 				if (err instanceof Yup.ValidationError) {
 					const errors = getValidationErrors(err);

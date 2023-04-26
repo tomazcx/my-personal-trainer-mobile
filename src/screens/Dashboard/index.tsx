@@ -9,16 +9,18 @@ import {
 	Header,
 	HeaderTitle,
 	UserName,
-	ProfileButton,
 	UserAvatar,
 	ProvidersList,
-	ProvidersListTitle
+	ProvidersListTitle,
+	HeaderUserInfo,
+	LogOutButton,
+	LogOutButtonText
 } from "./styles";
 import {AxiosResponse} from "axios";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
-import {Button} from "react-native";
 import {ProviderItem} from "../../components/ProviderItem";
 import {ProviderProps} from "../../components/ProviderItem";
+import {Text} from "react-native";
 
 export const Dashboard: React.FC = () => {
 	const [providers, setProviders] = useState<ProviderProps[]>([]);
@@ -28,7 +30,6 @@ export const Dashboard: React.FC = () => {
 
 	useEffect(() => {
 		api.get("/providers").then((response: AxiosResponse) => {
-			console.log(response.data)
 			setProviders(response.data);
 		});
 	}, []);
@@ -42,23 +43,24 @@ export const Dashboard: React.FC = () => {
 	return (
 		<Container>
 			<Header>
-				<HeaderTitle>
-					Bem vindo, {"\n"}
-					<UserName>{user.name}</UserName>
-				</HeaderTitle>
+				<HeaderUserInfo onPress={navigateToProfile}>
+					<UserAvatar source={{uri: `https://my-personal-trainer-api.up.railway.app/files/${user.avatar}`}} />
 
-				<ProfileButton onPress={navigateToProfile}>
-					<UserAvatar source={{uri: user.avatar_url}} />
-				</ProfileButton>
-				<Button onPress={signOut} title="Sair" />
+					<HeaderTitle>
+						Bem vindo, {"\n"}
+						<UserName>{user.name}</UserName>
+					</HeaderTitle>
+				</HeaderUserInfo>
+				<LogOutButton onPress={signOut} ><LogOutButtonText>Sair</LogOutButtonText></LogOutButton>
+
 			</Header>
 
 			<ProvidersList
 				data={providers}
 				ListHeaderComponent={
-					<ProvidersListTitle>Personal Trainers</ProvidersListTitle>
+					<ProvidersListTitle>Treinadores disponívies</ProvidersListTitle>
 				}
-				renderItem={({item: provider}: {item: ProviderProps}) => <ProviderItem name={provider.name} avatar_url={provider.avatar_url} id={provider.id} key={provider.id} />}
+				renderItem={({item: provider}: {item: ProviderProps}) => <ProviderItem name={provider.name} avatar={provider.avatar} id={provider.id} key={provider.id} />}
 			/>
 		</Container>
 	);

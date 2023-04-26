@@ -7,10 +7,10 @@ import {ProviderAvatar, ProviderContainer, ProviderInfo, ProviderMeta, ProviderM
 export interface ProviderProps {
 	name: string
 	id: string
-	avatar_url: string
+	avatar: string
 }
 
-export const ProviderItem: React.FC<ProviderProps> = ({name, id, avatar_url}) => {
+export const ProviderItem: React.FC<ProviderProps> = ({name, id, avatar}) => {
 
 	const {navigate} = useNavigation<NativeStackNavigationProp<ParamListBase>>()
 
@@ -21,13 +21,14 @@ export const ProviderItem: React.FC<ProviderProps> = ({name, id, avatar_url}) =>
 		[navigate],
 	);
 
-	const blobl = () => console.log('asdasd')
+	const avatarImage = avatar !== null ? `https://my-personal-trainer-api.up.railway.app/files/${avatar}` : 'https://museulinguaportuguesa.org.br/wp-content/uploads/2018/02/Personal-Trainer.jpg'
+
 
 	return (
 		<ProviderContainer
 			onPress={() => console.log('adas')}
 		>
-			<ProviderAvatar source={{uri: avatar_url}} />
+			<ProviderAvatar source={{uri: avatarImage}} />
 
 			<ProviderInfo >
 				<ProviderName>{name}</ProviderName>

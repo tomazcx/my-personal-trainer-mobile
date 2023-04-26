@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import {api} from '../services/api';
-import axios from 'axios';
 
 interface AuthState {
 	token: string;
@@ -23,7 +22,7 @@ interface IUser {
 	id: string;
 	name: string;
 	email: string;
-	avatar_url: string;
+	avatar: string;
 }
 
 interface AuthContextData {
@@ -31,6 +30,7 @@ interface AuthContextData {
 	loading: boolean;
 	signIn(credentials: SignInCredentials): Promise<void>;
 	signOut(): void;
+	updateUser(user: IUser): Promise<void>
 }
 
 interface ProviderProps {
@@ -81,8 +81,20 @@ export const AuthProvider: React.FC = ({children}: ProviderProps) => {
 		setData({} as AuthState);
 	}, []);
 
+	const updateUser = useCallback(
+		async (user: IUser) => {
+			await AsyncStorage.setItem("@GoBarber:user", JSON.stringify(user));
+
+			setData({
+				token: data.token,
+				user,
+			});
+		},
+		[setData, data.token],
+	);
+
 	return (
-		<AuthContext.Provider value={{user: data.user as IUser, loading, signIn, signOut}}>
+		<AuthContext.Provider value={{user: data.user as IUser, loading, updateUser, signIn, signOut}}>
 			{children}
 		</AuthContext.Provider>
 	);

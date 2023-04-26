@@ -4,6 +4,7 @@ import AppointmentCreated from '../screens/AppointmentCreated';
 import CreateAppointment from '../screens/CreateAppointment';
 
 import {Dashboard} from '../screens/Dashboard';
+import Profile from '../screens/Profile';
 
 const App = createNativeStackNavigator();
 
@@ -15,7 +16,7 @@ const AppRoutes: React.FC = () => (
 		}}
 	>
 		<App.Screen name="Dashboard" component={Dashboard} />
-		{/*<App.Screen name="Profile" component={Profile} /> */}
+		<App.Screen name="Profile" component={Profile} />
 	</App.Navigator>
 
 );
