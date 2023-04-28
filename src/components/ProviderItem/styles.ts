@@ -7,7 +7,8 @@ export const ProviderContainer = styled(RectButton)`
   padding: 20px;
   margin-bottom: 16px;
   flex-direction: row;
-  align-items: center;
+	align-items: center;
+	width:100%
 `;
 
 export const ProviderAvatar = styled.Image`
@@ -16,7 +17,7 @@ export const ProviderAvatar = styled.Image`
   border-radius: 36px;
 `;
 
-export const ProviderInfo = styled.View`
+export const ProviderData = styled.View`
   flex: 1;
   margin-left: 20px;
 `;

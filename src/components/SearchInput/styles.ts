@@ -2,12 +2,12 @@ import styled from "styled-components/native";
 
 export const Container = styled.View`
 	background-color: #3e3b47;
-	border-radius:8px;
 	color: #FFF;
-	margin: 0px 24px 16px;
+	margin: 26px 0;
 	padding: 5px 10px;
 	flex-direction: row;
 	align-items:center;
+	width:100%;
 	gap: 16px;	
 `
 

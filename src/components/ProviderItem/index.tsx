@@ -2,15 +2,22 @@ import {ParamListBase, useNavigation} from "@react-navigation/native"
 import {NativeStackNavigationProp} from "@react-navigation/native-stack"
 import {useCallback} from "react"
 import Icon from "react-native-vector-icons/Feather"
-import {ProviderAvatar, ProviderContainer, ProviderInfo, ProviderMeta, ProviderMetaText, ProviderName} from "./styles"
+import {ProviderAvatar, ProviderContainer, ProviderData, ProviderMeta, ProviderMetaText, ProviderName} from "./styles"
 
 export interface ProviderProps {
 	name: string
 	id: string
 	avatar: string
+	ProviderInfo: {
+		startHour: number;
+		endHour: number
+		category: {
+			category: string
+		}
+	}
 }
 
-export const ProviderItem: React.FC<ProviderProps> = ({name, id, avatar}) => {
+export const ProviderItem: React.FC<ProviderProps> = ({name, id, avatar, ProviderInfo}) => {
 
 	const {navigate} = useNavigation<NativeStackNavigationProp<ParamListBase>>()
 
@@ -29,7 +36,7 @@ export const ProviderItem: React.FC<ProviderProps> = ({name, id, avatar}) => {
 		>
 			<ProviderAvatar source={{uri: avatarImage}} />
 
-			<ProviderInfo >
+			<ProviderData >
 				<ProviderName>{name}</ProviderName>
 
 				<ProviderMeta>
@@ -39,9 +46,14 @@ export const ProviderItem: React.FC<ProviderProps> = ({name, id, avatar}) => {
 
 				<ProviderMeta>
 					<Icon name="clock" size={14} color="#8C0000" />
-					<ProviderMetaText>8h as 18h</ProviderMetaText>
+					<ProviderMetaText>{ProviderInfo.startHour}h as {ProviderInfo.endHour}h</ProviderMetaText>
 				</ProviderMeta>
-			</ProviderInfo>
+				<ProviderMeta>
+					<Icon name="grid" size={14} color="#8C0000" />
+					<ProviderMetaText>{ProviderInfo.category.category}</ProviderMetaText>
+				</ProviderMeta>
+
+			</ProviderData>
 		</ProviderContainer>
 
 	)

@@ -5,7 +5,7 @@ import {ProviderProps} from "../../components/ProviderItem";
 import {RectButton} from "react-native-gesture-handler";
 
 export const Container = styled.View`
-  flex: 1;
+	flex: 1;
 `;
 
 export const Header = styled.View`
@@ -14,7 +14,8 @@ export const Header = styled.View`
   background: #28262e;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+	align-items: center;
+	width:100%;
 `;
 
 export const NotFoundText = styled.Text`
@@ -45,15 +46,10 @@ export const UserAvatar = styled.Image`
   border-radius: 28px;
 `;
 
-export const ProvidersListTitle = styled.Text`
-  font-size: 24px;
-  margin: 36px 24px 16px;
-  color: #f4ede8;
-`;
+export const Main = styled.View``
 
 export const ProvidersList = styled(FlatList as new () => FlatList<ProviderProps>)`
-	padding: 16px 24px 16px 16px;
-	margin-bottom: 24px;
+	width:100%;
 `;
 
 export const LogOutButton = styled.TouchableOpacity`
