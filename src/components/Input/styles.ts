@@ -13,10 +13,9 @@ export const Container = styled.View<ContainerProps>`
   padding: 0 16px;
   background: #232129;
   border-radius: 10px;
-  margin-bottom: 8px;
   border-width: 2px;
-  border-color: #232129;
-
+	border-color: #232129;
+	margin-bottom:16px;
   flex-direction: row;
   align-items: center;
 

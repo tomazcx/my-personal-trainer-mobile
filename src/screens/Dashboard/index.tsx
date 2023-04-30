@@ -1,4 +1,4 @@
-import React, {Provider, useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {ParamListBase, useNavigation} from "@react-navigation/native";
 import {api} from "../../services/api";
 import {useAuth} from "../../hooks/auth";
@@ -82,8 +82,9 @@ export const Dashboard: React.FC = () => {
 				<LogOutButton onPress={signOut} ><LogOutButtonText>Sair</LogOutButtonText></LogOutButton>
 
 			</Header>
+			<SelectCategory onValueChange={(text) => setCategoryId(text)} />
+
 			<Main>
-				<SelectCategory onValueChange={(text) => setCategoryId(text)} />
 
 				<SearchInput onChangeText={(text: string) => setSearchText(text)} />
 

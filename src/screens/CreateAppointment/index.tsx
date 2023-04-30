@@ -3,7 +3,7 @@ import {Platform, Text, Alert, View} from "react-native";
 import {useRoute, useNavigation} from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import {addDays, format, subDays} from "date-fns";
+import {addDays, format, formatISO, subDays} from "date-fns";
 import {api} from "../../services/api";
 import {useAuth} from "../../hooks/auth";
 import {Calendar, LocaleConfig} from 'react-native-calendars';
@@ -28,6 +28,8 @@ import {
 	ProviderInfoContainer,
 	ProviderInfo,
 	ProviderText,
+	DescriptionContainer,
+	Description,
 } from "./styles";
 
 interface RouteParams {
@@ -39,6 +41,9 @@ export interface Provider {
 	name: string;
 	avatar: string;
 	email: string
+	ProviderInfo: {
+		description?: string
+	}
 }
 
 interface AvailabilityItem {
@@ -76,7 +81,6 @@ const CreateAppointment: React.FC = () => {
 
 	const routeParams = route.params as RouteParams;
 
-	const [providers, setProviders] = useState<Provider[]>([]);
 	const [providerData, setProviderData] = useState<Provider | undefined>(undefined)
 	const [selectedProvider, setSelectedProvider] = useState(
 		routeParams.providerId,
@@ -89,10 +93,9 @@ const CreateAppointment: React.FC = () => {
 	const providerAvatar = providerData?.avatar ? `https://my-personal-trainer-api.up.railway.app/files/${providerData?.avatar}` : 'https://museulinguaportuguesa.org.br/wp-content/uploads/2018/02/Personal-Trainer.jpg'
 
 	useEffect(() => {
-		api.get("/providers").then((response) => {
-			setProviders(response.data);
-			const selectedProviderData = response.data.find((provider: Provider) => provider.id === selectedProvider)
-			setProviderData(selectedProviderData)
+		api.get(`/providers/${selectedProvider}`).then((response) => {
+			console.log(response.data)
+			setProviderData(response.data)
 		});
 	}, []);
 
@@ -113,10 +116,6 @@ const CreateAppointment: React.FC = () => {
 	const navigateBack = useCallback(() => {
 		goBack();
 	}, [goBack]);
-
-	const handleSelectProvider = useCallback((providerId: string) => {
-		setSelectedProvider(providerId);
-	}, []);
 
 	const handleToggleDatePicker = useCallback(() => {
 		setShowDatePicker((state) => !state);
@@ -167,13 +166,15 @@ const CreateAppointment: React.FC = () => {
 			date.setHours(selectedHour);
 			date.setMinutes(0);
 
-			await api.post("/appointments", {
+			const response = await api.post("/appointments", {
 				provider_id: selectedProvider,
-				date,
+				date: formatISO(date),
 			});
 
-			navigate("AppointmentCreated", {date: date.getTime()});
+			console.log(response.data)
+
 		} catch (err) {
+			console.log(err)
 			Alert.alert(
 				"Erro ao criar agendamento",
 				"Ocorreu um erro ao criar o agendamento",
@@ -202,6 +203,10 @@ const CreateAppointment: React.FC = () => {
 						<ProviderText>Email: {providerData?.email || 'Carregando...'}</ProviderText>
 					</ProviderInfo>
 				</ProviderInfoContainer>
+				<DescriptionContainer>
+					<Title>Descrição:</Title>
+					<Description>{providerData?.ProviderInfo.description || 'Nenhuma descrição informada'}</Description>
+				</DescriptionContainer>
 
 				<CalenderContainer>
 					<Title>Escolha a data</Title>
@@ -278,7 +283,7 @@ const CreateAppointment: React.FC = () => {
 					</Section>
 				</Schedule>
 
-				<CreateAppointmentButton>
+				<CreateAppointmentButton onPress={handleCreateAppointment}>
 					<CreateAppointmentButtonText>Agendar</CreateAppointmentButtonText>
 				</CreateAppointmentButton>
 			</Content>

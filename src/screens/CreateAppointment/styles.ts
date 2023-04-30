@@ -93,6 +93,14 @@ export const ProviderContainer = styled(RectButton) <ProviderContainerProps>`
 
 export const CalenderContainer = styled.View``;
 
+export const DescriptionContainer = styled.View`
+`;
+
+export const Description = styled.Text`
+	margin: 12px 24px 24px;
+	color: #AFAFAF;
+`
+
 export const Title = styled.Text`
   color: #f4ede8;
   font-size: 24px;

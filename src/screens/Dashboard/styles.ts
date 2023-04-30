@@ -46,7 +46,9 @@ export const UserAvatar = styled.Image`
   border-radius: 28px;
 `;
 
-export const Main = styled.View``
+export const Main = styled.View`
+	padding: 0 16px
+`
 
 export const ProvidersList = styled(FlatList as new () => FlatList<ProviderProps>)`
 	width:100%;
