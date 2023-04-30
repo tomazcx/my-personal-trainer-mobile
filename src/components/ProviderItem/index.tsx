@@ -40,16 +40,16 @@ export const ProviderItem: React.FC<ProviderProps> = ({name, id, avatar, Provide
 				<ProviderName>{name}</ProviderName>
 
 				<ProviderMeta>
-					<Icon name="calendar" size={14} color="#8C0000" />
+					<Icon name="calendar" size={14} color="#d4d4d4" />
 					<ProviderMetaText>Segunda a sexta</ProviderMetaText>
 				</ProviderMeta>
 
 				<ProviderMeta>
-					<Icon name="clock" size={14} color="#8C0000" />
+					<Icon name="clock" size={14} color="#d4d4d4" />
 					<ProviderMetaText>{ProviderInfo.startHour}h as {ProviderInfo.endHour}h</ProviderMetaText>
 				</ProviderMeta>
 				<ProviderMeta>
-					<Icon name="grid" size={14} color="#8C0000" />
+					<Icon name="grid" size={14} color="#d4d4d4" />
 					<ProviderMetaText>{ProviderInfo.category.category}</ProviderMetaText>
 				</ProviderMeta>
 

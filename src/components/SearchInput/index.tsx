@@ -6,8 +6,8 @@ import {Input} from "./styles"
 export const SearchInput: React.FC<TextInput> = ({...rest}) => {
 	return (
 		<Container>
-			<Icon name="search" color={'#FFF'} />
-			<Input {...rest} placeholder="Pesquisar" />
+			<Icon name="search" color={'#b8b4b4'} />
+			<Input {...rest} placeholder="Pesquisar" placeholderTextColor={'#b8b4b4'} />
 		</Container>
 	)
 }

@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import {getStatusBarHeight} from "react-native-iphone-x-helper";
-import {FlatList} from "react-native";
+import {Dimensions, FlatList} from "react-native";
 import {ProviderProps} from "../../components/ProviderItem";
 import {RectButton} from "react-native-gesture-handler";
 
@@ -51,7 +51,7 @@ export const Main = styled.View`
 `
 
 export const ProvidersList = styled(FlatList as new () => FlatList<ProviderProps>)`
-	width:100%;
+	height: ${Dimensions.get('window').height * 0.6}px;
 `;
 
 export const LogOutButton = styled.TouchableOpacity`

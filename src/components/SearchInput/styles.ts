@@ -17,6 +17,6 @@ export const Input = styled.TextInput`
 	flex:1;
 
 	::placeholder{
-		color: "#FFF"
+		color: #FFF
 	}
 `
