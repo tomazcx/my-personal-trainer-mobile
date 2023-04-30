@@ -43,6 +43,9 @@ export interface Provider {
 	email: string
 	ProviderInfo: {
 		description?: string
+		category: {
+			category: string
+		}
 	}
 }
 
@@ -201,6 +204,7 @@ const CreateAppointment: React.FC = () => {
 					<ProviderInfo>
 						<ProviderText>Nome: {providerData?.name || 'Carregando...'}</ProviderText>
 						<ProviderText>Email: {providerData?.email || 'Carregando...'}</ProviderText>
+						<ProviderText>Categoria: {providerData?.ProviderInfo.category.category || 'Carregando...'}</ProviderText>
 					</ProviderInfo>
 				</ProviderInfoContainer>
 				<DescriptionContainer>

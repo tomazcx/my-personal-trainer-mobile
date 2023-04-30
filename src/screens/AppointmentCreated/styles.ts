@@ -22,7 +22,7 @@ export const Description = styled.Text`
 `;
 
 export const OkButton = styled(RectButton)`
-  background: #ff9000;
+  background: #890000;
   border-radius: 10px;
   padding: 12px 24px;
   margin-top: 24px;
@@ -31,6 +31,6 @@ export const OkButton = styled(RectButton)`
 `;
 
 export const OkButtonText = styled.Text`
-  color: #312e38;
+  color: #FFF;
   font-size: 18px;
 `;
