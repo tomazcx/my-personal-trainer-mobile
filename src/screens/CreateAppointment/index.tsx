@@ -3,7 +3,7 @@ import {Platform, Text, Alert, View} from "react-native";
 import {useRoute, useNavigation} from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import {addDays, format, formatISO, subDays} from "date-fns";
+import {addDays, format, formatISO, subDays, subHours} from "date-fns";
 import {api} from "../../services/api";
 import {useAuth} from "../../hooks/auth";
 import {Calendar, LocaleConfig} from 'react-native-calendars';
@@ -97,7 +97,6 @@ const CreateAppointment: React.FC = () => {
 
 	useEffect(() => {
 		api.get(`/providers/${selectedProvider}`).then((response) => {
-			console.log(response.data)
 			setProviderData(response.data)
 		});
 	}, []);
@@ -150,6 +149,7 @@ const CreateAppointment: React.FC = () => {
 		return availability
 			.filter(({hour}) => hour >= 12)
 			.map(({hour, available}) => {
+				console.log(hour)
 				return {
 					hour,
 					available,
@@ -169,9 +169,11 @@ const CreateAppointment: React.FC = () => {
 			date.setHours(selectedHour);
 			date.setMinutes(0);
 
+			let formatedDate = formatISO(subHours(date, 3))
+
 			await api.post("/appointments", {
 				provider_id: selectedProvider,
-				date: formatISO(date),
+				date: formatedDate,
 			});
 
 			navigate('AppointmentCreated', {date: date.getTime()});
