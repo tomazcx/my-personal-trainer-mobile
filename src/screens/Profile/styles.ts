@@ -1,15 +1,39 @@
 import styled from "styled-components/native";
-import {Platform} from "react-native";
 
-export const Container = styled.View`
-  padding: 0 30px ${Platform.OS === "android" ? 150 : 30}px;
-  flex: 1;
-  justify-content: center;
-`;
+export const Container = styled.ScrollView.attrs({
+	contentContainerStyle: {paddingHorizontal: 24},
+	vertical: true,
+	showsHorizontalScrollIndicator: false,
+})``;
+
+export const Header = styled.View`
+	flex-direction:row;
+	justify-content:space-between;
+	padding-top: 24px;
+	align-items:center;
+`
+
+export const LogOutButton = styled.TouchableOpacity`
+	width: 78px;
+	border-radius: 5px;
+	background: #8C0000;
+	align-items:center;
+	justify-content:center;
+	height: 36px;
+`
+export const LogOutButtonText = styled.Text`
+	color: #FFF;
+`
 
 export const BackButton = styled.TouchableOpacity`
-  margin-top: 160px;
+	flex-direction:row;
+	align-items:center;
 `;
+
+export const BackButtonText = styled.Text`
+	color: #FFF;
+	font-size:18px;
+`
 
 export const Title = styled.Text`
   font-size: 20px;

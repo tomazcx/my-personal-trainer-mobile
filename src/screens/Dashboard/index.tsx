@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import {ParamListBase, useNavigation} from "@react-navigation/native";
 import {api} from "../../services/api";
 import {useAuth} from "../../hooks/auth";
+import {Button} from '../../components/Button'
 
 import {
 	Container,
@@ -11,10 +12,10 @@ import {
 	UserAvatar,
 	ProvidersList,
 	HeaderUserInfo,
-	LogOutButton,
-	LogOutButtonText,
 	NotFoundText,
-	Main
+	Main,
+	AppointmentsLink,
+	AppointmentsLinkText
 } from "./styles";
 import {AxiosResponse} from "axios";
 import {NativeStackNavigationProp} from "@react-navigation/native-stack";
@@ -65,6 +66,11 @@ export const Dashboard: React.FC = () => {
 		navigate("Profile");
 	}, [navigate]);
 
+	const navigateToAppointmentsList = useCallback(() => {
+		navigate("ClientAppointments");
+	}, [navigate]);
+
+
 	const providerList = searchText ? providers?.filter(provider => provider.name.toLowerCase().includes(searchText.toLowerCase())) : []
 
 
@@ -79,7 +85,7 @@ export const Dashboard: React.FC = () => {
 						<UserName>{user.name}</UserName>
 					</HeaderTitle>
 				</HeaderUserInfo>
-				<LogOutButton onPress={signOut} ><LogOutButtonText>Sair</LogOutButtonText></LogOutButton>
+				<AppointmentsLink onPress={navigateToAppointmentsList}><AppointmentsLinkText>Agendamentos</AppointmentsLinkText></AppointmentsLink>
 
 			</Header>
 			<SelectCategory onValueChange={(text) => setCategoryId(text)} />

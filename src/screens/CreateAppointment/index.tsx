@@ -149,7 +149,6 @@ const CreateAppointment: React.FC = () => {
 		return availability
 			.filter(({hour}) => hour >= 12)
 			.map(({hour, available}) => {
-				console.log(hour)
 				return {
 					hour,
 					available,

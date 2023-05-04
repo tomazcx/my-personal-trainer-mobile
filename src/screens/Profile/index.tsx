@@ -26,6 +26,10 @@ import {
 	Title,
 	UserAvatarButton,
 	UserAvatar,
+	BackButtonText,
+	Header,
+	LogOutButton,
+	LogOutButtonText,
 } from "./styles";
 
 interface ProfileFormData {
@@ -37,7 +41,7 @@ interface ProfileFormData {
 }
 
 const Profile: React.FC = () => {
-	const {user, updateUser} = useAuth();
+	const {user, signOut, updateUser} = useAuth();
 
 	const emailInputRef = useRef<TextInput>(null);
 	const oldPasswordInputRef = useRef<TextInput>(null);
@@ -170,9 +174,15 @@ const Profile: React.FC = () => {
 					contentContainerStyle={{flex: 1}}
 				>
 					<Container>
-						<BackButton onPress={handleGoBack}>
-							<Icon name="chevron-left" size={24} color="#FFF" />
-						</BackButton>
+						<Header>
+							<BackButton onPress={handleGoBack}>
+								<Icon name="chevron-left" size={24} color="#FFF" />
+								<BackButtonText>Voltar</BackButtonText>
+							</BackButton>
+
+							<LogOutButton onPress={signOut} ><LogOutButtonText>Deslogar</LogOutButtonText></LogOutButton>
+
+						</Header>
 
 						<UserAvatarButton onPress={handleUpdateAvatar}>
 							<UserAvatar source={{uri: user.avatar ? `https://my-personal-trainer-api.up.railway.app/files/${user.avatar}` : 'https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg'}} />

@@ -18,6 +18,17 @@ export const Header = styled.View`
 	width:100%;
 `;
 
+export const AppointmentsLink = styled.TouchableOpacity`
+		background-color: #890000;
+	padding:8px;
+	border-radius:7px;
+`
+
+export const AppointmentsLinkText = styled.Text`
+color: #FFF;
+	text-align: center;
+`
+
 export const NotFoundText = styled.Text`
 	color: #FFF;
 	text-align:center;
@@ -53,18 +64,6 @@ export const Main = styled.View`
 export const ProvidersList = styled(FlatList as new () => FlatList<ProviderProps>)`
 	height: ${Dimensions.get('window').height * 0.6}px;
 `;
-
-export const LogOutButton = styled.TouchableOpacity`
-	width: 64px;
-	border-radius: 5px;
-	background: #8C0000;
-	align-items:center;
-	justify-content:center;
-	height: 36px;
-`
-export const LogOutButtonText = styled.Text`
-	color: #FFF;
-`
 
 export const SearchProviders = styled.TextInput`
 	background-color: #3e3b47;
