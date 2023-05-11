@@ -3,6 +3,7 @@ import {SignIn} from "../screens/SignIn";
 import SignUp from "../screens/SignUp";
 import React from "react";
 import ForgotPassword from "../screens/ForgotPassword";
+import RecoverPassword from "../screens/RecoverPassword";
 
 const Auth = createNativeStackNavigator()
 
@@ -17,6 +18,7 @@ export const AuthRoutes = () => {
 		}}>
 			<Auth.Screen name='signIn' component={SignIn} />
 			<Auth.Screen name='forgotPassword' component={ForgotPassword} />
+			<Auth.Screen name='recoverPassword' component={RecoverPassword} />
 			<Auth.Screen name='signUp' component={SignUp} />
 		</Auth.Navigator>
 	)

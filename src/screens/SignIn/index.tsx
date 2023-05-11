@@ -94,7 +94,7 @@ export const SignIn = () => {
 								icon="mail"
 								placeholder="E-mail"
 								returnKeyType="next"
-								onSubmitEditing={() => passwordRef.current?.focus()}
+								onSubmitEditing={() => formRef.current?.focus()}
 							/>
 
 							<Input

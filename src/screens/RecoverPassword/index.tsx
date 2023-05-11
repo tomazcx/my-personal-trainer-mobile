@@ -3,9 +3,9 @@ import React, {useState} from "react"
 import Icon from "react-native-vector-icons/Feather"
 import {ParamListBase, useNavigation} from "@react-navigation/native"
 import {NativeStackNavigationProp} from "@react-navigation/native-stack"
-import {FormEmailForgotPassword} from "../../components/FormEmailForgotPassword"
+import {FormRecoverPassword} from "../../components/FormRecoverPassword"
 
-const ForgotPassword: React.FC = () => {
+const RecoverPassword: React.FC = () => {
 
 
 	const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>()
@@ -13,7 +13,7 @@ const ForgotPassword: React.FC = () => {
 	return (
 		<>
 			<Container>
-				<FormEmailForgotPassword navigation={navigation.navigate} />
+				<FormRecoverPassword navigation={navigation.navigate} />
 			</Container>
 			<BackToLoginButton onPress={() => navigation.navigate('signIn')}>
 				<Icon name="log-in" size={20} color="#FFF" />
@@ -26,4 +26,4 @@ const ForgotPassword: React.FC = () => {
 
 }
 
-export default ForgotPassword
+export default RecoverPassword
