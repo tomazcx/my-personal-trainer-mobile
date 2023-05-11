@@ -5,6 +5,7 @@ import ClientAppointments from '../screens/ClientAppointments';
 import CreateAppointment from '../screens/CreateAppointment';
 
 import {Dashboard} from '../screens/Dashboard';
+import ForgotPassword from '../screens/ForgotPassword';
 import Profile from '../screens/Profile';
 
 const App = createNativeStackNavigator();

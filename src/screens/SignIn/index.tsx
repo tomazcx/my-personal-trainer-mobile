@@ -2,7 +2,6 @@ import React, {useCallback, useRef} from "react"
 import {Container, Title, ForgotPassword, ForgotPasswordText, CreateAccountButton, CreateAccountButtonText, Logo} from './styles';
 import {
 	View,
-	Image,
 	ScrollView,
 	KeyboardAvoidingView,
 	Platform,
@@ -32,7 +31,7 @@ export const SignIn = () => {
 	const passwordRef = useRef<TextInput>(null);
 	const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>()
 
-	const {signIn, user} = useAuth()
+	const {signIn} = useAuth()
 
 	const handleSubmit = useCallback(
 		async (data: SignInFormData) => {
@@ -114,7 +113,7 @@ export const SignIn = () => {
 						</Form>
 
 						<ForgotPassword>
-							<ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
+							<ForgotPasswordText onPress={() => navigation.navigate('forgotPassword')}>Esqueci minha senha</ForgotPasswordText>
 						</ForgotPassword>
 					</Container>
 				</ScrollView>

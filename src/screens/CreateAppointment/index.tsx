@@ -71,8 +71,8 @@ LocaleConfig.locales['br'] = {
 		'Dezembro'
 	],
 	monthNamesShort: ["jan.", "fev.", "mar.", "abr.", "maio", "jun.", "jul.", "ago.", "set.", "out.", "nov.", "dez."],
-	dayNames: ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'],
-	dayNamesShort: ['Seg.', 'Ter.', 'Quar.', 'Qui.', 'Sex.', 'Sáb.', 'Dom.'],
+	dayNames: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+	dayNamesShort: ['Dom.','Seg.', 'Ter.', 'Quar.', 'Qui.', 'Sex.', 'Sáb.'],
 	today: "Hoje"
 };
 LocaleConfig.defaultLocale = 'br'
@@ -91,7 +91,7 @@ const CreateAppointment: React.FC = () => {
 	const [showDatePicker, setShowDatePicker] = useState(false);
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [availability, setAvailability] = useState<AvailabilityItem[]>([]);
-	const [selectedHour, setSelectedHour] = useState(0);
+	const [selectedHour, setSelectedHour] = useState(6);
 
 	const providerAvatar = providerData?.avatar ? `https://my-personal-trainer-api.up.railway.app/files/${providerData?.avatar}` : 'https://museulinguaportuguesa.org.br/wp-content/uploads/2018/02/Personal-Trainer.jpg'
 
@@ -135,7 +135,7 @@ const CreateAppointment: React.FC = () => {
 
 	const morningAvailability = useMemo(() => {
 		return availability
-			.filter(({hour}) => hour < 12)
+			.filter(({hour}) => hour < 12 &&  hour >= 6)
 			.map(({hour, available}) => {
 				return {
 					hour,
@@ -147,7 +147,7 @@ const CreateAppointment: React.FC = () => {
 
 	const afternoonAvailability = useMemo(() => {
 		return availability
-			.filter(({hour}) => hour >= 12)
+			.filter(({hour}) => hour >= 12 && hour <=18)
 			.map(({hour, available}) => {
 				return {
 					hour,
@@ -156,6 +156,19 @@ const CreateAppointment: React.FC = () => {
 				};
 			});
 	}, [availability]);
+
+	const nightAvailability = useMemo(() => {
+		return availability
+			.filter(({hour}) => hour > 18)
+			.map(({hour, available}) => {
+				return {
+					hour,
+					available,
+					hourFormatted: format(new Date().setHours(hour), "HH:00"),
+				};
+			});
+	}, [availability]);
+	
 
 	const handleSelectHour = useCallback((hour: number) => {
 		setSelectedHour(hour);
@@ -270,6 +283,27 @@ const CreateAppointment: React.FC = () => {
 
 						<SectionContent>
 							{afternoonAvailability.map(
+								({hourFormatted, hour, available}) => (
+									<Hour
+										key={hourFormatted}
+										onPress={() => handleSelectHour(hour)}
+										enabled={available}
+										available={available}
+										selected={selectedHour === hour}
+									>
+										<HourText selected={selectedHour === hour}>
+											{hourFormatted}
+										</HourText>
+									</Hour>
+								),
+							)}
+						</SectionContent>
+					</Section>
+					<Section>
+						<SectionTitle>Noite</SectionTitle>
+
+						<SectionContent>
+							{nightAvailability.map(
 								({hourFormatted, hour, available}) => (
 									<Hour
 										key={hourFormatted}
